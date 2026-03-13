@@ -10,8 +10,8 @@ data class SummaryCard(
 
 val Tarjeta = listOf(
     SummaryCard(
-        titulo = "Actividad de la Semana",
-        monto = "",
+        titulo = "Actividad",
+        monto = "de la semana",
         backgroundColor = Color(0xFFDCEFE8)
     ),
     SummaryCard(
