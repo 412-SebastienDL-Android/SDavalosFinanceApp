@@ -13,11 +13,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.models.Tarjeta
+import com.example.financeapp.models.transaccion
 import com.example.financeapp.models.usuario
 import com.example.financeapp.ui.theme.FinanceAppTheme
 
@@ -169,7 +172,74 @@ fun HomeScreen(innerPadding: PaddingValues) {
             }
             Spacer(modifier = Modifier.height(20.dp))
         }
-
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Transactions",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.onBackground
+                )
+                Text(
+                    text = "See All",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colors.onBackground.copy(alpha = 0.5f)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+        items(transaccion) { transaction ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.ShoppingCart,
+                        contentDescription = transaction.categoria,
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(45.dp)
+                            .clip(CircleShape)
+                            .background(Color.Black)
+                            .padding(10.dp)
+                    )
+                    Column(modifier = Modifier.padding(start = 12.dp)) {
+                        Text(
+                            text = transaction.nombre,
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = colors.onBackground
+                        )
+                        Text(
+                            text = transaction.categoria,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = colors.onBackground.copy(alpha = 0.5f)
+                        )
+                    }
+                }
+                Column(horizontalAlignment = Alignment.End) {
+                    Text(
+                        text = "$${transaction.monto}",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.onBackground
+                    )
+                    Text(
+                        text = transaction.hora,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colors.onBackground.copy(alpha = 0.5f)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -180,6 +250,6 @@ fun HomeScreen(innerPadding: PaddingValues) {
 @Composable
 fun HomeScreenPreview() {
     FinanceAppTheme{
-    HomeScreen(innerPadding = PaddingValues(0.dp))
-        }
+        HomeScreen(innerPadding = PaddingValues(0.dp))
+    }
 }
